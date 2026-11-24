@@ -127,18 +127,18 @@ The application separates presentation, business logic, and AI integration into 
 ## Screenshots
 
 ### AI Conversational Assistant
-<img width="1579" height="906" alt="AI assistant conversation" src="https://github.com/user-attachments/assets/c9684bf3-f4c8-40bc-aada-98332517a8c9" />
-<img width="1571" height="902" alt="AI assistant answering an inventory question" src="https://github.com/user-attachments/assets/88350188-09f6-4fd2-b73f-4696ad9e4bc7" />
+![AI Assistant](screenshots/chat-1.png)
+![AI Assistant](screenshots/chat-2.png)
 
 ### Dashboard
-<img width="1572" height="903" alt="Operational dashboard" src="https://github.com/user-attachments/assets/4c6ce5c7-fd3c-4f5b-8ff9-0b29994a91e9" />
+![Dashboard](screenshots/dashboard.png)
 
 ### Silo Management
-<img width="1577" height="904" alt="Silo overview" src="https://github.com/user-attachments/assets/842dd990-dd41-4dc1-9f82-a1130c906573" />
-<img width="1575" height="899" alt="Silo details and measurements" src="https://github.com/user-attachments/assets/5e42b6c6-b288-4f2a-998f-71e8c895f241" />
+![Silo Management](screenshots/silo-management.png)
+![Silo Details](screenshots/silo-details.png)
 
 ### Shipment Management
-<img width="1568" height="901" alt="Shipment tracking" src="https://github.com/user-attachments/assets/8abf8ce7-15aa-442f-ad4b-111dac4924aa" />
+![Shipment Management](screenshots/shipment-management.png)
 
 ---
 
