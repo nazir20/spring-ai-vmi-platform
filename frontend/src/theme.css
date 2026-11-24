@@ -1,0 +1,91 @@
+:root {
+  --text-accent: var(--brand-forest-medium);
+  --text-accent-hover: var(--brand-forest-dark);
+  --text-on-brand: #fff;
+  --focus-ring: var(--brand-forest-light);
+}
+
+html[data-bs-theme="dark"] {
+  --bs-body-bg: #111a16;
+  --bs-body-bg-rgb: 17, 26, 22;
+  --bs-body-color: #edf4ee;
+  --bs-body-color-rgb: 237, 244, 238;
+  --bs-secondary-color: #a9bdb1;
+  --bs-secondary-bg: #24342b;
+  --bs-tertiary-bg: #1b2821;
+  --bs-emphasis-color: #f2f8f3;
+  --bs-emphasis-color-rgb: 242, 248, 243;
+  --bs-border-color: #384b40;
+  --bs-link-color: #b2e0c4;
+  --bs-link-color-rgb: 178, 224, 196;
+  --bs-link-hover-color: #c1f824;
+  --bs-link-hover-color-rgb: 193, 248, 36;
+
+  --card-background: #1b2821;
+  --border-light: #384b40;
+  --text-main: var(--bs-body-color);
+  --text-muted-green: var(--bs-secondary-color);
+  --text-sidebar-muted: #a8bdb1;
+  --text-accent: var(--bs-link-color);
+  --text-accent-hover: var(--bs-link-hover-color);
+  --focus-ring: #a5d8b9;
+  --sys-green-bg: #1e3a2a;
+  --sys-orange-bg: #432f1e;
+  --sys-red-bg: #402825;
+  --shadow-sm: 0 2px 8px rgb(0 0 0 / 18%);
+  --shadow-md: 0 10px 25px rgb(0 0 0 / 22%);
+  --shadow-lg: 0 20px 40px rgb(0 0 0 / 32%);
+
+  --action-dark-bg: #306448;
+  --action-dark-hover: #3a7656;
+
+  color-scheme: dark;
+  scrollbar-color: #5d7467 transparent;
+}
+
+.theme-toggle {
+  flex: 0 0 auto;
+}
+
+.theme-toggle[aria-pressed="true"] {
+  color: var(--brand-lime);
+  background: var(--bs-secondary-bg);
+}
+
+.theme-toggle:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
+.theme-toggle-login {
+  position: absolute;
+  inset-block-start: 1rem;
+  inset-inline-end: 1rem;
+  z-index: 2;
+}
+
+[data-bs-theme="dark"] :is(.btn-quick-action, .btn-login, .chat-send, .assistant-rail .assistant-new, .shipment-primary-button) {
+  background-color: var(--action-dark-bg);
+  border-color: var(--action-dark-bg);
+  color: var(--text-on-brand);
+}
+
+[data-bs-theme="dark"] :is(.btn-quick-action, .btn-login, .chat-send, .assistant-rail .assistant-new, .shipment-primary-button):enabled:hover {
+  background-color: var(--action-dark-hover);
+  border-color: var(--action-dark-hover);
+  color: var(--text-on-brand);
+}
+
+[data-bs-theme="dark"] :is(.navbar-search-input, .login-input):focus {
+  border-color: var(--focus-ring);
+}
+
+[data-bs-theme="dark"] .navbar-search-input::placeholder {
+  color: var(--text-muted-green);
+}
+
+@media (max-width: 575px) {
+  .navbar-custom .navbar-actions {
+    margin-inline-start: auto;
+  }
+}

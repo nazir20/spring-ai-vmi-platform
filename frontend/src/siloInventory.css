@@ -1,0 +1,363 @@
+/* Hallmark · modern minimal · Orbit forest green and lime · vessel with stock ledger; map with site directory
+   Pre-emit critique: P5 H5 E4 S5 R5 V5 */
+.silo-inventory-view,
+.silo-list-card {
+  --inventory-low: #9e2925;
+  --inventory-high: #894800;
+  --inventory-normal: #276743;
+  --inventory-unknown: #53675d;
+  --inventory-map-water: #dce8e8;
+  --inventory-map-land: #edf0eb;
+  --inventory-map-germany: #e5ebdd;
+  --inventory-map-border: #b7c8bb;
+  --inventory-map-state: #c0cebc;
+  --inventory-map-river: #9cbcc2;
+}
+
+html:has(.silo-inventory-view), body:has(.silo-inventory-view) { overflow-x: clip; }
+.silo-inventory-view .page-title { overflow-wrap: anywhere; }
+.silo-inventory-view .page-header { margin-bottom: 1.4rem; }
+.inventory-actions { display: flex; flex-wrap: wrap; gap: .5rem; }
+.inventory-button, .inventory-back {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  white-space: nowrap;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: .82rem;
+  color: var(--text-accent);
+}
+.inventory-button {
+  min-height: 2.5rem;
+  background: var(--card-background);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: .45rem .85rem;
+}
+.inventory-button:hover { background: var(--bs-body-bg); color: var(--text-accent-hover); }
+.inventory-back { margin-bottom: 1rem; }
+.inventory-back:hover { text-decoration: underline; color: var(--text-accent-hover); }
+.inventory-button:focus-visible, .inventory-back:focus-visible, .silo-card-link:focus-visible,
+.silo-map-preview-link:focus-visible, .silo-map-directory a:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+.silo-list-card { transition: box-shadow 160ms ease; }
+.silo-list-card:hover, .silo-list-card:focus-within { box-shadow: var(--shadow-lg); }
+.silo-card-link { text-decoration: none; display: flex; justify-content: space-between; gap: .75rem; }
+.silo-card-link i { font-size: .9rem; color: var(--text-muted-green); }
+.silo-card-link:hover { text-decoration: underline; color: var(--text-accent-hover); }
+
+.stock-low { --stock-color: var(--inventory-low); --stock-bg: var(--sys-red-bg); }
+.stock-high { --stock-color: var(--inventory-high); --stock-bg: var(--sys-orange-bg); }
+.stock-normal { --stock-color: var(--inventory-normal); --stock-bg: var(--sys-green-bg); }
+.stock-unknown { --stock-color: var(--inventory-unknown); --stock-bg: var(--border-light); }
+.inventory-status {
+  border-radius: var(--radius-sm);
+  color: var(--stock-color);
+  background: var(--stock-bg);
+  padding: .25rem .55rem;
+  font-size: .73rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.silo-detail-grid, .silo-map-layout, .silo-detail-information {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1rem;
+  align-items: start;
+}
+.inventory-panel {
+  min-width: 0;
+  padding: clamp(1rem, 2vw, 1.5rem);
+  background: var(--card-background);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-xxl);
+  box-shadow: var(--shadow-sm);
+}
+.inventory-panel-header {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: .5rem;
+  margin-bottom: 1rem;
+}
+.inventory-panel-header h2 { margin: 0; font-size: 1rem; }
+.inventory-panel-header p { margin: .25rem 0 0; font-size: .8rem; color: var(--text-muted-green); }
+
+.silo-vessel-panel {
+  --vessel-fill: color-mix(in srgb, var(--stock-color) 73%, var(--card-background));
+  --vessel-stage: color-mix(in srgb, var(--stock-bg) 24%, var(--bs-body-bg));
+  --vessel-min: var(--inventory-high);
+  --vessel-max: var(--inventory-unknown);
+  margin: 0;
+}
+.silo-vessel-caption { display: flex; align-items: flex-start; justify-content: space-between; gap: .75rem; }
+.silo-vessel-material, .silo-vessel-fill-stat { display: grid; gap: .32rem; }
+.silo-vessel-material { min-width: 0; }
+.silo-vessel-material > span, .silo-vessel-fill-stat > span {
+  color: var(--text-muted-green);
+  font-size: .77rem;
+}
+.silo-vessel-material > strong {
+  font-size: clamp(1.65rem, 4vw, 2.55rem);
+  line-height: 1.08;
+  font-weight: 750;
+  letter-spacing: -.04em;
+  overflow-wrap: anywhere;
+}
+.silo-vessel-material .silo-vessel-on-hand { margin-top: .14rem; font-size: .86rem; }
+.silo-vessel-on-hand b { color: var(--text-main); font-size: 1rem; font-weight: 750; }
+.silo-vessel-fill-stat { text-align: end; white-space: nowrap; padding-top: .2rem; }
+.silo-vessel-fill-stat > strong {
+  color: var(--stock-color);
+  font-size: clamp(1.5rem, 3.2vw, 2.3rem);
+  line-height: 1.1;
+  letter-spacing: -.04em;
+  font-variant-numeric: tabular-nums;
+}
+.silo-vessel-action {
+  display: flex;
+  align-items: flex-start;
+  gap: .65rem;
+  margin: 1rem 0 .8rem;
+  padding: .75rem .9rem;
+  border-radius: var(--radius-md);
+  color: var(--stock-color);
+  background: var(--stock-bg);
+}
+.silo-vessel-action > i { font-size: 1.05rem; line-height: 1.4; }
+.silo-vessel-action strong { font-size: .83rem; font-weight: 800; }
+.silo-vessel-action p { margin: .15rem 0 0; font-size: .79rem; line-height: 1.42; }
+
+.silo-vessel-stage {
+  display: grid;
+  place-items: center;
+  min-height: 17.5rem;
+  padding: 1.1rem;
+  background: var(--vessel-stage);
+  border-radius: var(--radius-lg);
+}
+.silo-vessel {
+  display: grid;
+  justify-items: center;
+  width: min(10rem, 67%);
+}
+.silo-vessel-cap {
+  width: 32%;
+  height: .5rem;
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  background: var(--stock-color);
+}
+.silo-vessel-shell {
+  position: relative;
+  width: 100%;
+  height: 12.5rem;
+  overflow: clip;
+  border: 3px solid var(--stock-color);
+  border-radius: 2rem 2rem 1.15rem 1.15rem;
+  background: var(--card-background);
+}
+.silo-vessel-fill {
+  position: absolute;
+  inset: auto 0 0;
+  background: var(--vessel-fill);
+}
+.silo-vessel-limit {
+  position: absolute;
+  inset-inline: 0;
+  height: 0;
+  border-top: 2px solid var(--vessel-max);
+  box-shadow: 0 1px var(--card-background);
+}
+.silo-vessel-limit-min {
+  border-top-color: var(--vessel-min);
+  border-top-style: dashed;
+}
+.silo-vessel-base {
+  width: 64%;
+  height: .65rem;
+  border-inline: .32rem solid var(--stock-color);
+}
+.silo-vessel-key {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: .45rem 1rem;
+  margin-top: .75rem;
+  font-size: .72rem;
+  color: var(--text-muted-green);
+}
+.silo-vessel-key span { display: inline-flex; align-items: center; gap: .38rem; }
+.silo-vessel-key i { display: inline-block; width: .82rem; border-top: 2px solid var(--vessel-max); }
+.silo-vessel-key .silo-line-min { border-top: 2px dashed var(--vessel-min); }
+
+.silo-stock-data, .silo-reading-data {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .75rem 1rem;
+  margin: 0;
+}
+.silo-stock-data { padding: .85rem 0 1.1rem; }
+.silo-reading-data { border-top: 1px solid var(--border-light); padding-top: 1rem; }
+.silo-stock-data dt, .silo-reading-data dt { font-size: .72rem; color: var(--text-muted-green); font-weight: 650; }
+.silo-stock-data dd, .silo-reading-data dd { margin: .2rem 0 0; font-variant-numeric: tabular-nums; }
+.silo-stock-data dd { font-size: clamp(1rem, 2vw, 1.5rem); font-weight: 800; line-height: 1.15; overflow-wrap: anywhere; }
+.silo-stock-data small { font-size: .7em; color: var(--text-muted-green); }
+.silo-reading-data dd { font-weight: 700; font-size: .8rem; overflow-wrap: anywhere; }
+.silo-reading-data small { display: block; font-weight: 500; color: var(--text-muted-green); }
+.silo-description { margin: 1rem 0 0; }
+.silo-map-preview-link {
+  display: block;
+  position: relative;
+  border-radius: var(--radius-lg);
+  color: var(--text-accent);
+  text-decoration: none;
+}
+.silo-map-preview-action {
+  position: relative;
+  display: flex; align-items: center; gap: .55rem;
+  padding: .65rem .15rem 0;
+  font-size: .79rem;
+  font-weight: 750;
+  white-space: nowrap;
+}
+.silo-map-preview-action i:last-child { margin-left: auto; }
+.silo-map-preview-link:hover .silo-map-preview-action { text-decoration: underline; color: var(--text-accent-hover); }
+.inventory-location-empty { display: block; padding: 1rem; background: var(--bs-body-bg); border-radius: var(--radius-lg); }
+
+.silo-map-frame {
+  isolation: isolate;
+  position: relative;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  overflow: clip;
+  background: var(--inventory-map-water);
+}
+.silo-map-surface.leaflet-container {
+  height: clamp(25rem, 60vh, 42rem);
+  background: var(--inventory-map-water);
+  font-family: var(--bs-body-font-family);
+}
+.silo-map-frame-mini .silo-map-surface { height: 9.7rem; pointer-events: none; }
+.silo-map-surface .silo-geo-country { fill: var(--inventory-map-land); stroke: var(--inventory-map-border); }
+.silo-map-surface .silo-geo-germany { fill: var(--inventory-map-germany); stroke: var(--inventory-map-border); stroke-width: 1.4; }
+.silo-map-surface .silo-geo-state { fill: none; stroke: var(--inventory-map-state); stroke-dasharray: 3 2; }
+.silo-map-surface .silo-geo-river { fill: none; stroke: var(--inventory-map-river); }
+.silo-map-city { position: absolute; white-space: nowrap; transform: translate(.25rem, -.34rem); font-size: .65rem; color: var(--inventory-unknown); }
+.silo-map-label::before { content: ""; position: absolute; inset: -1px auto auto -1px; width: 3px; height: 3px; border-radius: 50%; background: var(--inventory-unknown); }
+.map-pin {
+  display: grid; place-items: center;
+  position: relative;
+  width: 2.15rem;
+  height: 2rem;
+  color: var(--text-on-brand);
+  background: var(--brand-forest-medium);
+  border: 2px solid var(--card-background);
+  border-radius: .85rem .85rem .78rem .78rem;
+  box-shadow: var(--shadow-lg);
+  font-weight: 800;
+  font-size: .91rem;
+}
+.map-pin::after {
+  content: ""; position: absolute; left: calc(50% - 4px); bottom: -5px; width: 8px; height: 8px;
+  rotate: 45deg; background: var(--brand-forest-medium); z-index: -1;
+}
+.map-pin-selected { outline: 3px solid var(--brand-lime); }
+.map-pin-city {
+  position: absolute; left: 50%; top: calc(100% + .55rem); transform: translateX(-50%);
+  padding: .14rem .4rem; border-radius: var(--radius-sm);
+  color: var(--text-accent-hover); background: var(--card-background);
+  font-size: .7rem; font-weight: 750; white-space: nowrap;
+}
+.map-pin-strip { position: absolute; top: -.48rem; left: 50%; transform: translateX(-50%); display: flex; gap: 1px; }
+.map-pin-strip span {
+  display: grid; place-items: center; width: .84rem; height: .84rem;
+  color: var(--stock-color); background: var(--stock-bg); border: 1px solid var(--card-background);
+  border-radius: 50%; font-size: .57rem; line-height: 1; font-weight: 800;
+}
+.silo-map-site-details { color: var(--text-main); }
+.silo-map-site-title { display: block; font-size: .9rem; }
+.silo-map-site-city { color: var(--text-muted-green); font-size: .71rem; margin-bottom: .45rem; }
+.silo-map-site-silos { list-style: none; margin: .45rem 0 0; padding: 0; }
+.silo-map-site-silos li { padding: .32rem 0; border-top: 1px solid var(--border-light); }
+.silo-map-silo-name { display: block; font-size: .77rem; font-weight: 750; white-space: nowrap; }
+.silo-map-site-silos small { color: var(--stock-color); font-size: .68rem; }
+.silo-map-fallback { padding: .45rem .75rem; font-size: .77rem; background: var(--card-background); }
+.silo-site-count { font-size: .75rem; color: var(--text-muted-green); white-space: nowrap; }
+.silo-map-legend { display: flex; flex-wrap: wrap; gap: .5rem 1rem; list-style: none; padding: 0; margin: .85rem 0 0; }
+.silo-map-legend li { display: flex; gap: .35rem; align-items: center; font-size: .72rem; font-weight: 650; }
+.silo-map-legend li > span { display: grid; place-items: center; width: 1.1rem; height: 1.1rem; color: var(--stock-color); background: var(--stock-bg); border-radius: 50%; }
+.silo-map-note { margin: .8rem 0 0; }
+.silo-directory-site + .silo-directory-site { margin-top: 1.15rem; }
+.silo-directory-site h3 { margin: 0; font-size: .89rem; }
+.silo-directory-site p { margin: .14rem 0 .3rem; color: var(--text-muted-green); font-size: .72rem; }
+.silo-directory-site ul { list-style: none; margin: 0; padding: 0; }
+.silo-directory-site li + li { border-top: 1px solid var(--border-light); }
+.silo-directory-site a {
+  display: flex; align-items: center; justify-content: space-between; gap: .5rem;
+  min-height: 2.9rem; padding: .4rem .5rem; margin-inline: -.5rem;
+  border-radius: var(--radius-sm); color: var(--text-main); text-decoration: none;
+}
+.silo-directory-site a:hover, .silo-directory-site .silo-directory-selected { background: var(--bs-body-bg); }
+.silo-directory-site a strong, .silo-directory-site a small { display: block; }
+.silo-directory-site a strong { font-size: .8rem; }
+.silo-directory-site a small { font-size: .71rem; color: var(--stock-color); }
+.silo-directory-site a i { color: var(--text-muted-green); }
+
+@media (min-width: 48rem) {
+  .silo-detail-grid { grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); }
+  .silo-vessel-panel { position: sticky; top: 1.25rem; }
+  .silo-vessel-stage { min-height: 21rem; }
+  .silo-vessel-shell { height: 15.25rem; }
+}
+@media (min-width: 64rem) {
+  .silo-map-layout { grid-template-columns: minmax(0, 1fr) clamp(12rem, 19%, 15rem); }
+  .silo-map-panel .silo-map-surface { height: clamp(31rem, 68vh, 47rem); }
+  .silo-map-directory { padding: 1rem; }
+  .silo-directory-site a { min-height: 2.6rem; }
+  .silo-stock-data { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (prefers-reduced-motion: reduce) { .silo-list-card { transition: none; } }
+[data-bs-theme="dark"] :is(.silo-inventory-view, .silo-list-card) {
+  --inventory-low: #ffada5;
+  --inventory-high: #ffc589;
+  --inventory-normal: #a4e3b9;
+  --inventory-unknown: #b4c8bf;
+  --inventory-map-water: #17292c;
+  --inventory-map-land: #24342d;
+  --inventory-map-germany: #30433a;
+  --inventory-map-border: #657c70;
+  --inventory-map-state: #536c60;
+  --inventory-map-river: #63868e;
+}
+
+[data-bs-theme="dark"] .silo-map-surface :is(.leaflet-bar a, .leaflet-tooltip, .leaflet-control-attribution) {
+  background: var(--card-background);
+  color: var(--text-main);
+  border-color: var(--border-light);
+}
+
+[data-bs-theme="dark"] .silo-map-surface .leaflet-bar a:hover {
+  background: var(--bs-secondary-bg);
+}
+
+[data-bs-theme="dark"] .silo-map-surface .leaflet-bar a.leaflet-disabled {
+  color: var(--text-muted-green);
+}
+
+[data-bs-theme="dark"] .silo-map-surface .leaflet-tooltip-top::before {
+  border-top-color: var(--card-background);
+}
+
+[data-bs-theme="dark"] .silo-map-surface .leaflet-control-attribution a {
+  color: var(--text-accent);
+}
+
+[data-bs-theme="dark"] .silo-list-card .text-bg-light {
+  background-color: var(--bs-secondary-bg) !important;
+  color: var(--text-main) !important;
+}

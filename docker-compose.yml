@@ -1,0 +1,71 @@
+services:
+  postgres:
+    image: postgres:18-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: orbit_demo
+      POSTGRES_USER: orbit
+      POSTGRES_PASSWORD: ${ORBIT_POSTGRES_PASSWORD:-orbit-local-db-only}
+    volumes:
+      - postgres-data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -U \"$$POSTGRES_USER\" -d \"$$POSTGRES_DB\""]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+
+  spring-backend:
+    build:
+      context: ./spring-backend
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:${ORBIT_API_PORT:-8000}:8000"
+    env_file:
+      - path: ./spring-backend/.env
+        required: false
+    environment:
+      SPRING_PROFILES_ACTIVE: demo
+      SERVER_ADDRESS: 0.0.0.0
+      SERVER_PORT: "8000"
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/orbit_demo
+      SPRING_DATASOURCE_USERNAME: orbit
+      SPRING_DATASOURCE_PASSWORD: ${ORBIT_POSTGRES_PASSWORD:-orbit-local-db-only}
+      FRONTEND_BASE_URL: http://localhost:${ORBIT_WEB_PORT:-5173}
+    entrypoint:
+      - /bin/sh
+      - -ec
+      - |
+        if [ -z "$${SPRING_APP_JWTSECRET:-}" ]; then
+          export SPRING_APP_JWTSECRET="$$(head -c 32 /dev/urandom | base64)"
+        fi
+        export VMI_DEMO_ADMIN_PASSWORD="$${VMI_DEMO_ADMIN_PASSWORD:-OrbitDemo-Local-26!}"
+        exec java -jar /app/app.jar
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "bash", "-c", "true > /dev/tcp/127.0.0.1/8000"]
+      interval: 5s
+      timeout: 3s
+      start_period: 30s
+      retries: 12
+
+  frontend:
+    build:
+      context: ./frontend
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:${ORBIT_WEB_PORT:-5173}:5173"
+    environment:
+      VITE_AUTH_BACKEND: spring
+      VITE_SPRING_API_URL: ""
+      ORBIT_API_PROXY_TARGET: http://spring-backend:8000
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    depends_on:
+      spring-backend:
+        condition: service_healthy
+
+volumes:
+  postgres-data:
